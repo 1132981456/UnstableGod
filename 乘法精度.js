@@ -1,6 +1,7 @@
 /**
  * 由于计算机由 1,0 翻译导致计算机出现精度的问题
  * 目前以下方法可以解决该精度问题
+ * 原理是先将小数点去除，整数相乘之后，再将结果除回去
  * @param num
  * @param decimal
  */
@@ -14,6 +15,7 @@ function mathRound(num, decimal) {
     return Math.round(num * p1 / 10) / p2;
 }
 function MathToFixed(num, decimal) {
+    
     return mathRound(num, decimal).toFixed(decimal);
 }
 function accMul(arg1,arg2){
