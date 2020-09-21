@@ -12,4 +12,3 @@ async function output() {
 }
 console.log(new Date())
 let aaa = output();
-

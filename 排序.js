@@ -122,6 +122,8 @@ let selectSort = function selectSort(arr, num) {
 
 /**
  * 插入排序
+ * 当插入的数是较小数时，后移的次数明显增多，对效率有影响
+ * 如[2,3,4,5,6,1]
  * @param arr 数组
  * @param num 大于 0 由大到小 ， 小于 0 由小到大
  * @returns {*} 排序后数组
@@ -172,13 +174,93 @@ let insertSort = function insertSort(arr, num) {
     return arr;
 };
 
+/**
+ * 希尔排序(缩小增量排序)
+ * 基本思想
+ * 希尔排序是把记录按下标的一定增量分组,对每组使用直接插入排序算法排序随着增量逐渐减少,
+ * 每组包含的关键词越来越多,当增量减至1时,整个文件恰被分成一组,算法便终止
+ * @param arr 数组
+ * @param num 大于 0 由大到小 ， 小于 0 由小到大
+ * @returns {*} 排序后数组
+ */
+let sellSortOne = function sellSortOne(arr, num) {
+    //希尔排序交换法
+    console.log("希尔排序-交换法");
+    let temp = 0;
+    if (num > 0) {
+        //经过测试 将除以2改成除以3会变快 改成除以4相对除以3则变化不大
+        for (let gap = Math.floor(arr.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            // console.log('gap: '+gap)
+            for (let i = gap; i < arr.length; i++) {
+                for (let j = i - gap; j >= 0; j -= gap) {
+                    if (arr[j] < arr[j + gap]) {
+                        temp = arr[j];
+                        arr[j] = arr[j + gap];
+                        arr[j + gap] = temp;
+                    }
+                }
+            }
+        }
+    } else if (num < 0) {
+        //经过测试 将除以2改成除以3会变快 改成除以4相对除以3则变化不大
+        for (let gap = Math.floor(arr.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            // console.log('gap: '+gap)
+            for (let i = gap; i < arr.length; i++) {
+                for (let j = i - gap; j >= 0; j -= gap) {
+                    if (arr[j] > arr[j + gap]) {
+                        temp = arr[j];
+                        arr[j] = arr[j + gap];
+                        arr[j + gap] = temp;
+                    }
+                }
+            }
+        }
+    }
+    return arr;
+};
+
+// 希尔排序移位法
+let sellSortTwo = function sellSortTwo(arr, num) {
+    //希尔排序交换法
+    console.log("希尔排序-移位法");
+    let temp = 0;
+    if (num > 0) {
+        //增量gep 并逐步缩小容量
+        for (let gap = Math.floor(arr.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            //从第gep个元素，逐个对其所在的组进行排序
+            for (let i = gap; i < arr.length; i++) {
+                let j = i;
+                temp = arr[j];
+                while (j - gap >= 0 && temp > arr[j - gap]) {
+                    arr[j] = arr[j - gap];
+                    arr[j - gap] = temp;
+                }
+            }
+        }
+    } else if (num < 0) {
+        //增量gep 并逐步缩小容量
+        for (let gap = Math.floor(arr.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            //从第gep个元素，逐个对其所在的组进行排序
+            for (let i = gap; i < arr.length; i++) {
+                let j = i;
+                temp = arr[j];
+                while (j - gap >= 0 && temp < arr[j - gap]) {
+                    arr[j] = arr[j - gap];
+                    arr[j - gap] = temp;
+                }
+            }
+        }
+    }
+};
+
+
 let list = [];
 // let num = 10;
-let num = 300000;
+let num = 10000000;
 let start, end;
 console.log("开始生成随机数组: " + new Date().getTime());
 for (let i = 0; i < num; i++) {
-    list.push(Math.floor(Math.random() * 1000));
+    list.push(Math.floor(Math.random() * num));
 }
 console.log("随机数组生成完毕: " + new Date().getTime());
 console.log("随机数组长度: " + list.length);
@@ -188,13 +270,18 @@ console.log("随机数组长度: " + list.length);
 
 //冒泡排序
 // runFunction(bubbleSort, list, 1);
-runFunction(bubbleSort, Array.from(list), 1);
+// runFunction(bubbleSort, Array.from(list), 1);
 // //选择排序
 // runFunction(selectSort,list,1)
-runFunction(selectSort, Array.from(list), 1);
+// runFunction(selectSort, Array.from(list), 1);
 // //插入排序
 // runFunction(insertSort,list,1)
-runFunction(insertSort, Array.from(list), 1);
+// runFunction(insertSort, Array.from(list), 1);
+// //希尔排序
+// runFunction(sellSortOne,list,1)
+// runFunction(sellSortOne, Array.from(list), 1);
+// runFunction(sellSortTwo, list, 1);
+runFunction(sellSortTwo, Array.from(list), 1);
 
 // console.log(list);
 
