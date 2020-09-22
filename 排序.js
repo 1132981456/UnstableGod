@@ -253,10 +253,45 @@ let sellSortTwo = function sellSortTwo(arr, num) {
     }
 };
 
+let fastSort = function fastSort(arr,num){
+    let sort = function (arr,left,right){
+        let l,r;//左下标，右下标
+        if(left){l=left}
+        if(right){r=right}
+        let pivot=Math.floor((right-left)/2);//中轴
+        let temp=0;//临时变量，交换时用
+        //while目的是让笔pivot值小的放左边，比pivot大的放右边
+        while(l<r){
+            //在pivot一直找，找到大于等于pivot的值
+            while(arr[l]<pivot){
+                l++;
+            }
+            //在pivot一直找，找到小于等于pivot的值
+            while(arr[r]>pivot){
+                r--;
+            }
+            // 如果l>=r , 说明pivot左边的值已经按照左边小于pivot的值，右边大于pivot的值
+            // if(i>=r){break;}
+            // 交换
+            temp=arr[l];
+            arr[l]=arr[r];
+            arr[r]=temp;
+            //如果交换完后，发现这个arr[l]==pivot值，pivot-- 向前移动
+            if(arr[l]==pivot){
+                r--;
+            }
+
+        }
+        return arr;
+    }
+    arr = sort(arr,1,1)
+
+}
+
 
 let list = [];
-// let num = 10;
-let num = 10000000;
+let num = 15;
+// let num = 100000;
 let start, end;
 console.log("开始生成随机数组: " + new Date().getTime());
 for (let i = 0; i < num; i++) {
@@ -281,7 +316,9 @@ console.log("随机数组长度: " + list.length);
 // runFunction(sellSortOne,list,1)
 // runFunction(sellSortOne, Array.from(list), 1);
 // runFunction(sellSortTwo, list, 1);
-runFunction(sellSortTwo, Array.from(list), 1);
+// runFunction(sellSortTwo, Array.from(list), 1);
+//快速排序
+runFunction(fastSort,list,1)
 
 // console.log(list);
 
