@@ -253,54 +253,90 @@ let sellSortTwo = function sellSortTwo(arr, num) {
     }
 };
 
-let fastSort = function fastSort(arr,num){
-    let sort = function (arr,left,right){
-        let l,r;//左下标，右下标
-        if(left){l=left}
-        if(right){r=right}
-        let pivot=Math.floor((right-left)/2);//中轴
-        let temp=0;//临时变量，交换时用
+// 快速排序
+let fastSort = function fastSort(arr, num) {
+    let sort = function (arr, left, right) {
+        let l, r;//左下标，右下标
+        if (left !== undefined) {
+            l = left;
+        }
+        if (right !== undefined) {
+            r = right;
+        }
+        // let pivot=arr[Math.floor((right-left)/2)];//中轴
+        let pivot = arr[right];//中轴
+        let temp = 0;//临时变量，交换时用
         //while目的是让笔pivot值小的放左边，比pivot大的放右边
-        while(l<r){
+        while (l < r) {
             //在pivot一直找，找到大于等于pivot的值
-            while(arr[l]<pivot){
+            while (arr[l] < pivot) {
                 l++;
             }
             //在pivot一直找，找到小于等于pivot的值
-            while(arr[r]>pivot){
+            while (arr[r] > pivot) {
                 r--;
             }
+            console.log("l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
+            console.log("交换前",arr)
+            // 交换
             // 如果l>=r , 说明pivot左边的值已经按照左边小于pivot的值，右边大于pivot的值
             // if(i>=r){break;}
-            // 交换
-            temp=arr[l];
-            arr[l]=arr[r];
-            arr[r]=temp;
-            //如果交换完后，发现这个arr[l]==pivot值，pivot-- 向前移动
-            if(arr[l]==pivot){
+            temp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = temp;
+            console.log("交换后",arr)
+            //如果交换完后，发现这个arr[l]==pivot值，r-- 向前移动
+            if (arr[l] == pivot) {
                 r--;
+            }
+            //如果交换完后，发现这个arr[r]==pivot值，l++ 向前移动
+            if (arr[r] == pivot) {
+                l++;
             }
 
         }
-        return arr;
-    }
-    arr = sort(arr,1,1)
+        // 如果l==r,必须l++,r--,否则会出现栈溢出
+        if (arr[l] == arr[r]) {
+            console.log("l==r -- l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
+            l++;
+            r--;
+        }
 
-}
+        //向左递归
+        if (left < r) {
+            // console.log("向左递归 -",left,"-",r,"-",arr)
+            console.log("向左递归 -",left,"-",r)
+            console.log(arr)
+            sort(arr, left, r);
+        }
+        //向右递归
+        if (right > l) {
+            // console.log("向右递归 -",l,"-",right,"-",arr)
+            console.log("向右递归 -",l,"-",right)
+            console.log(arr)
+            sort(arr, l, right);
+        }
+        // console.log("程序结束"+arr)
+    };
+    arr = sort(arr, 0, arr.length - 1);
+    return arr;
+};
 
 
 let list = [];
-let num = 15;
+let num = 30;
 // let num = 100000;
 let start, end;
 console.log("开始生成随机数组: " + new Date().getTime());
 for (let i = 0; i < num; i++) {
-    list.push(Math.floor(Math.random() * num));
+    list.push(Math.floor(Math.random() * (num * 10)));
 }
 console.log("随机数组生成完毕: " + new Date().getTime());
 console.log("随机数组长度: " + list.length);
 
-// console.log(list);
+list=[3,4,3];
+
+console.log(list);
 // runFunction(insertSort,list,1)
 
 //冒泡排序
@@ -318,9 +354,9 @@ console.log("随机数组长度: " + list.length);
 // runFunction(sellSortTwo, list, 1);
 // runFunction(sellSortTwo, Array.from(list), 1);
 //快速排序
-runFunction(fastSort,list,1)
+runFunction(fastSort, list, 1);
 
-// console.log(list);
+console.log(list);
 
 
 /**
