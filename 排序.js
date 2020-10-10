@@ -5,60 +5,60 @@
  * @returns {*} 排序后数组
  */
 let bubbleSort = function bubbleSort(arr, num) {
-    /**
-     * 冒泡排序(Bubble Sorting)的基本思想
-     * 通过对待排序序列从前向后(从下标较小的元素开始),依次比较相邻元素的值,
-     * 若发现逆序则交换,使值较大的元素逐渐从前移向后部,就象水底下的气泡一样逐渐向上冒。
-     *
-     * 优化
-     * 因为排序的过程中,各元素不断接近自己的位置,如果一趟比较下来没有进行过交换,
-     * 就说明序列有序,因此要在排序过程中设置个标志flag判断元素是否进行过交换。从而减少不必要的比较
-     *
-     * 小结冒泡排序规则
-     * (1)一共进行数组的大小1次大的循环
-     * (2)每一趟排序的次数在逐渐的属少
-     * (3)如果我们发现在某趟排序中,没有发生一次交换,可以提前结束冒泡排序。这个就是优化
-     */
-    console.log("冒泡排序");
-    if (num > 0) {
-        let max = arr.length;
-        let temp;//临时变量
-        while (max > 0) {
-            let flag = true;
-            for (let i = 0; i < max - 1; i++) {
-                if (arr[i] < arr[i + 1]) {
-                    temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    flag = false;
+        /**
+         * 冒泡排序(Bubble Sorting)的基本思想
+         * 通过对待排序序列从前向后(从下标较小的元素开始),依次比较相邻元素的值,
+         * 若发现逆序则交换,使值较大的元素逐渐从前移向后部,就象水底下的气泡一样逐渐向上冒。
+         *
+         * 优化
+         * 因为排序的过程中,各元素不断接近自己的位置,如果一趟比较下来没有进行过交换,
+         * 就说明序列有序,因此要在排序过程中设置个标志flag判断元素是否进行过交换。从而减少不必要的比较
+         *
+         * 小结冒泡排序规则
+         * (1)一共进行数组的大小1次大的循环
+         * (2)每一趟排序的次数在逐渐的属少
+         * (3)如果我们发现在某趟排序中,没有发生一次交换,可以提前结束冒泡排序。这个就是优化
+         */
+        console.log("冒泡排序");
+        if (num > 0) {
+            let max = arr.length;
+            let temp;//临时变量
+            while (max > 0) {
+                let flag = true;
+                for (let i = 0; i < max - 1; i++) {
+                    if (arr[i] < arr[i + 1]) {
+                        temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                        flag = false;
+                    }
+                }
+                max--;
+                if (flag) {
+                    break;
                 }
             }
-            max--;
-            if (flag) {
-                break;
-            }
-        }
-    } else if (num < 0) {
-        let max = arr.length;
-        let temp;
-        while (max > 0) {
-            let flag = true;
-            for (let i = 0; i < max - 1; i++) {
-                if (arr[i] > arr[i + 1]) {
-                    temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    flag = false;
+        } else if (num < 0) {
+            let max = arr.length;
+            let temp;
+            while (max > 0) {
+                let flag = true;
+                for (let i = 0; i < max - 1; i++) {
+                    if (arr[i] > arr[i + 1]) {
+                        temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                        flag = false;
+                    }
+                }
+                max--;
+                if (flag) {
+                    break;
                 }
             }
-            max--;
-            if (flag) {
-                break;
-            }
         }
-    }
-    return arr;
-};
+        return arr;
+    };
 
 /**
  * 选择排序
@@ -255,6 +255,7 @@ let sellSortTwo = function sellSortTwo(arr, num) {
 
 // 快速排序
 let fastSort = function fastSort(arr, num) {
+    console.log("快速排序");
     let sort = function (arr, left, right) {
         let l, r;//左下标，右下标
         if (left !== undefined) {
@@ -267,37 +268,74 @@ let fastSort = function fastSort(arr, num) {
         let pivot = arr[right];//中轴
         let temp = 0;//临时变量，交换时用
         //while目的是让笔pivot值小的放左边，比pivot大的放右边
-        while (l < r) {
-            //在pivot一直找，找到大于等于pivot的值
-            while (arr[l] < pivot) {
-                l++;
-            }
-            //在pivot一直找，找到小于等于pivot的值
-            while (arr[r] > pivot) {
-                r--;
-            }
-            console.log("l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
-            console.log("交换前",arr)
-            // 交换
-            // 如果l>=r , 说明pivot左边的值已经按照左边小于pivot的值，右边大于pivot的值
-            // if(i>=r){break;}
-            temp = arr[l];
-            arr[l] = arr[r];
-            arr[r] = temp;
-            console.log("交换后",arr)
-            //如果交换完后，发现这个arr[l]==pivot值，r-- 向前移动
-            if (arr[l] == pivot) {
-                r--;
-            }
-            //如果交换完后，发现这个arr[r]==pivot值，l++ 向前移动
-            if (arr[r] == pivot) {
-                l++;
-            }
+        if (num > 0) {
+            while (l < r) {
+                //在pivot一直找，找到大于等于pivot的值
+                while (arr[l] > pivot) {
+                    l++;
+                }
+                //在pivot一直找，找到小于等于pivot的值
+                while (arr[r] < pivot) {
+                    r--;
+                }
+                if (l >= r) {
+                    break;
+                }
+                // console.log("l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
+                // console.log("交换前",arr)
+                // 交换
+                // 如果l>=r , 说明pivot左边的值已经按照左边小于pivot的值，右边大于pivot的值
+                // if(i>=r){break;}
+                temp = arr[l];
+                arr[l] = arr[r];
+                arr[r] = temp;
+                // console.log("交换后",arr)
+                //如果交换完后，发现这个arr[l]==pivot值，r-- 向前移动
+                if (arr[l] == pivot) {
+                    r--;
+                }
+                //如果交换完后，发现这个arr[r]==pivot值，l++ 向前移动
+                if (arr[r] == pivot) {
+                    l++;
+                }
 
+            }
+        } else if (num < 0) {
+            while (l < r) {
+                //在pivot一直找，找到大于等于pivot的值
+                while (arr[l] < pivot) {
+                    l++;
+                }
+                //在pivot一直找，找到小于等于pivot的值
+                while (arr[r] > pivot) {
+                    r--;
+                }
+                if (l >= r) {
+                    break;
+                }
+                // console.log("l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
+                // console.log("交换前",arr)
+                // 交换
+                // 如果l>=r , 说明pivot左边的值已经按照左边小于pivot的值，右边大于pivot的值
+                // if(i>=r){break;}
+                temp = arr[l];
+                arr[l] = arr[r];
+                arr[r] = temp;
+                // console.log("交换后",arr)
+                //如果交换完后，发现这个arr[l]==pivot值，r-- 向前移动
+                if (arr[l] == pivot) {
+                    r--;
+                }
+                //如果交换完后，发现这个arr[r]==pivot值，l++ 向前移动
+                if (arr[r] == pivot) {
+                    l++;
+                }
+
+            }
         }
         // 如果l==r,必须l++,r--,否则会出现栈溢出
         if (arr[l] == arr[r]) {
-            console.log("l==r -- l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
+            // console.log("l==r -- l: "+l+" r: "+r+" arr[l]: "+arr[l]+" arr[r]: "+arr[r])
             l++;
             r--;
         }
@@ -305,15 +343,15 @@ let fastSort = function fastSort(arr, num) {
         //向左递归
         if (left < r) {
             // console.log("向左递归 -",left,"-",r,"-",arr)
-            console.log("向左递归 -",left,"-",r)
-            console.log(arr)
+            // console.log("向左递归 -",left,"-",r)
+            // console.log(arr)
             sort(arr, left, r);
         }
         //向右递归
         if (right > l) {
             // console.log("向右递归 -",l,"-",right,"-",arr)
-            console.log("向右递归 -",l,"-",right)
-            console.log(arr)
+            // console.log("向右递归 -",l,"-",right)
+            // console.log(arr)
             sort(arr, l, right);
         }
         // console.log("程序结束"+arr)
@@ -322,10 +360,78 @@ let fastSort = function fastSort(arr, num) {
     return arr;
 };
 
+// 归并排序
+let mergeSort = function (arr, num) {
+    console.log("归并排序");
+    //分+合
+    let mergeSort = function (arr, left, right, temp) {
+        if (left < right) {
+            let mid = Math.floor((left + right) / 2);//中间索引
+            mergeSort(arr, left, mid, temp);
+            mergeSort(arr, mid + 1, right, temp);
+            merge(arr, left, mid, right, temp);
+        }
+    };
+
+    /**
+     * @param arr 原始数组
+     * @param left 左边有序序列的初始索引
+     * @param mid 中间
+     * @param right 右边
+     * @param temp 中转数组
+     */
+    let merge = function (arr, left, mid, right, temp) {
+        let i = left;//初始化i 左边有序序列的初始索引
+        let j = mid + 1;//右边的初始索引
+        let t = 0;//指向temp数组的当前索引
+        //先把左右两边的数据按照规则填充到temp数组
+        //知道左右两边的有序序列有一边处理完毕位置
+        while (i <= mid && j <= right) {//继续
+            //如果左边的有序序列的当前元素，小于等于右边的当前元素
+            //即将左边的当前元素拷贝到temp数组
+            //然后t++,i++
+            if (arr[i] <= arr[j]) {
+                temp[t] = arr[i];
+                t++;
+                i++;
+            } else {// 反之 ，将右边有序序列的当前元素，拷贝到temp数组
+                temp[t] = arr[j];
+                t++;
+                j++;
+            }
+        }
+        //把有剩余数据的一边的数据依次全部填充到temp
+        while (i <= mid) {//左边的有序序列有剩余元素，j就全部填充到temp
+            temp[t] = arr[i];
+            t++;
+            i++;
+        }
+        while (j <= right) {//右边有剩余
+            temp[t] = arr[j];
+            t++;
+            j++;
+        }
+        //将temp数组元素重新copy到arr
+        //注意，并不是每次都拷贝所有
+        t = 0;
+        let tempLeft = left;
+        while (tempLeft <= right) {
+            //第一次合并，tempLeft=0,right=1
+            //第二次tempLeft=2,right=3
+            //第三次tempLeft=0,right=3
+            //最后一次tempLeft=0,right=length-1
+            arr[tempLeft] = temp[t];
+            t++;
+            tempLeft++;
+        }
+    };
+    let temp = new Array(arr.length);
+    mergeSort(arr, 0, arr.length - 1, temp);
+};
 
 let list = [];
-let num = 30;
-// let num = 100000;
+let num = 10;
+num = 100000;
 let start, end;
 console.log("开始生成随机数组: " + new Date().getTime());
 for (let i = 0; i < num; i++) {
@@ -334,9 +440,7 @@ for (let i = 0; i < num; i++) {
 console.log("随机数组生成完毕: " + new Date().getTime());
 console.log("随机数组长度: " + list.length);
 
-list=[3,4,3];
-
-console.log(list);
+// console.log(list);
 // runFunction(insertSort,list,1)
 
 //冒泡排序
@@ -353,10 +457,13 @@ console.log(list);
 // runFunction(sellSortOne, Array.from(list), 1);
 // runFunction(sellSortTwo, list, 1);
 // runFunction(sellSortTwo, Array.from(list), 1);
-//快速排序
-runFunction(fastSort, list, 1);
+// //快速排序
+// runFunction(fastSort, list, 1);
+// runFunction(fastSort, Array.from(list), 1);
+//归并排序
+runFunction(mergeSort, list, 1);
 
-console.log(list);
+// console.log(list);
 
 
 /**
