@@ -429,6 +429,17 @@ let mergeSort = function (arr, num) {
     mergeSort(arr, 0, arr.length - 1, temp);
 };
 
+//基数排序
+let radixSort = function (arr, num){
+    console.log("基数排序")
+    //定义一个二维数组，表示十个桶，每个桶是个一维数组
+    //1.二维数组包含10个一维数组
+    //2.为了防止放入数的时候，s数据溢出，每个数组大小定义为arr.length（JAVA）(由于现在是js代码，则不需要考虑长度问题)
+    //3.很明确，基数排序是使用空间换时间的经典算法
+    let bucket = new Array(10);
+
+}
+
 let list = [];
 let num = 10;
 num = 100000;
